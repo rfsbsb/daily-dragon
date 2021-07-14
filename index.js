@@ -3,9 +3,21 @@ const Handlebars = require('handlebars');
 
 const template = require('./src/template');
 const getData = require('./src/get_data');
+let month_arg = null;
+let day_arg = null;
 
-const {body, image, background_image, name} = getData();
-const output = `./dragon_${name}.png`;
+// Day, if exists
+if (process.argv[2]) {
+  day_arg = process.argv[2]
+}
+
+// Month, if exists
+if (process.argv[3]) {
+  month_arg = process.argv[3]
+}
+
+const {body, image, background_image, name, day, month} = getData(day_arg, month_arg);
+const output = `./generated/dragon_${month}_${day}_${name}.png`;
 
 nodeHtmlToImage({
   output,

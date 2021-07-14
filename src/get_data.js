@@ -1,11 +1,9 @@
 const fs = require('fs');
 
 const getData = (day, month) => {
-  if (!day && !month) {
-    const date = new Date();
-    month = date.toLocaleDateString('default', {month: 'numeric'});
-    day = date.toLocaleDateString('default', {day: 'numeric'})
-  }
+  const date = new Date();
+  month = month ?? date.toLocaleDateString('default', {month: 'numeric'});
+  day = day ?? date.toLocaleDateString('default', {day: 'numeric'})
   const image = fs.readFileSync(`./data/${month}/${day}/image.png`);
   const base64Image = new Buffer.from(image).toString('base64');
   const dataURI = 'data:image/jpeg;base64,' + base64Image;
@@ -23,7 +21,9 @@ const getData = (day, month) => {
     name: dragon_name.replace(/^\s+|\s+$/g, ''),
     image: dataURI,
     body: html_body,
-    background_image: dataURIBG
+    background_image: dataURIBG,
+    day,
+    month
   }
 }
 
